@@ -1,12 +1,31 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .forms import FoodForm
+from .models import Food
+from django.contrib import messages
+from django.utils import timezone
+
+#
+# def food_upload(request):
+#
+#     return render(request, 'cook/index.html')
 
 
 def food_upload(request):
-    return render(request, 'cook/index.html')
+    if request.method == 'POST':
+        form = FoodForm(request.POST)
+        if form.is_valid():
+            food = form.save(commit=False)
+            print("this is the form: {} after form.save".format(form))
+            food.user = request.user
+            print("see user below")
+            print(food.user)
+            food.created_at = timezone.now()
+            food.save()
+            context = {'form':form}
+            return render(request, 'feed/index.html')
 
-    # def form_valid(self, form):
-    #     candidate = form.save(commit=False)
-    #     candidate.user = UserProfile.objects.get(user=self.request.user)  # use your own profile here
-    #     candidate.save()
-    #     return HttpResponseRedirect(self.get_success_url())
+        else:
+            messages.error(request, 'oops something went wrong, try again')
+    form = FoodForm()
+    context = {"form":form}
+    return render(request, 'cook/index.html',context)

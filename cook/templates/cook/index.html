@@ -1,8 +1,21 @@
-{% extends 'base.html' %}
 
 
-{% block content %}
-<h1>what's cooking good looking<h1>
-    <h5>Coming up shortly</h5>
-    <button type="button" class="btn btn-secondary btn-lg" disabled>Add dish to feed</button>
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <form action="{% url 'food_upload' %}" method="POST">
+      {% csrf_token %}
+      {{form.as_p}}
+      <div class="form-group col-lg-2 container center_div">
+      <input type="submit" class="form-control" value="add dish">
+      </div>
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+    </form>
     {% endblock %}

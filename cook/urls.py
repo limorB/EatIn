@@ -3,5 +3,5 @@ from django.urls import path
 
 
 urlpatterns = [
-    path('', views.food_upload, name='index'),
+    path('', views.food_upload, name='food_upload'),
 ]

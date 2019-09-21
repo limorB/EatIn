@@ -1,6 +1,7 @@
 from django import forms
 from .models import Food
-from accounts.models import Food
+from accounts.models import Profile,User
+
 
 
 
@@ -8,4 +9,9 @@ from accounts.models import Food
 class FoodForm(forms.ModelForm):
     class Meta:
         model = Food
-        exclude = ["user"]
+        fields = [
+        'description',
+        'price',
+        'quantity',
+        'image'
+        ]

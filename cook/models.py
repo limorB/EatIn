@@ -11,4 +11,4 @@ class Food(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     quantity = models.IntegerField(blank=False,null=False)
-    image = models.ImageField(upload_to = 'images/')
+    image = models.ImageField(upload_to = 'images/',default=None,blank=True)
