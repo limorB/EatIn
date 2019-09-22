@@ -3,7 +3,8 @@
 {% block content %}
 <form action="{% url 'registration' %}" method="POST">
   {% csrf_token %}
-  {{form.as_p}}
+  {{ user_form.as_p }}
+  {{ profile_form.as_p }}
   <div class="form-group col-lg-2 container center_div">
   <input type="submit" class="form-control" value="sign up">
   </div>

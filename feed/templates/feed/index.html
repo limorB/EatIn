@@ -3,13 +3,23 @@
 
 {% block content %}
 <h1>Welcome to the food feed<h1>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
     <h5>Coming up shortly</h5>
     <a class="btn btn-primary" href="/cook/" role="button">add dish</a>
     <a class="btn btn-primary" href="/cart/" role="button">My Cart</a>
     <div class="list-group">
       <ul>{% for food in all_foods %}
       <li>
-        <a href = "{% url 'display_feed' %}" class="list-group-item py-1"> {{food.description}} </a>
+        <p class = "list-group-item py-1">{{food.title}}:{{food.description}}</p>
+        <img src="http://127.0.0.1:8000/media/{{food.image}}" alt="{food.title}}" height="100" width="100">
+        <a class="btn btn-primary" href="" role="button">add to cart</a>
+
       </li>
       {% endfor %}
 

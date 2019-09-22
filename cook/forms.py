@@ -10,7 +10,9 @@ class FoodForm(forms.ModelForm):
     class Meta:
         model = Food
         fields = [
+        'title',
         'description',
+        'category',
         'price',
         'quantity',
         'image'
