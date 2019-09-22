@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,logout
 from django.contrib import messages
 from .models import Profile
-from .forms import RegistrationForm
+from .forms import RegistrationForm,ProfileRegForm
 from django.contrib.auth.forms import AuthenticationForm
 import pdb
 
@@ -12,22 +12,27 @@ import pdb
 
 def registration(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
+        user_form = RegistrationForm(request.POST)
+        profile_form = ProfileRegForm(request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            user = user_form.save()
             login(request,user)
             #form.save return a user (if valid)
-            context = {'form':form}
+            context = {'user_form':user_form,'profile_form':profile_form}
             messages.success(request, 'You are now logged in.')
             return render(request,'feed/index.html',context)
         else:
             messages.error(request, 'oops something went wrong, try again')
 
     else:
-        form = RegistrationForm()
+        user_form = RegistrationForm()
+        profile_form = ProfileRegForm()
 
-    context = {'form':form}
+    context = {'user_form':user_form,'profile_form':profile_form}
     return render(request,'accounts/registration.html',context)
+
 
 
 

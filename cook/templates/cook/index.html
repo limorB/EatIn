@@ -4,18 +4,11 @@
     {% extends 'base.html' %}
 
     {% block content %}
-    <form action="{% url 'food_upload' %}" method="POST">
+    <form action="{% url 'food_upload' %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       {{form.as_p}}
       <div class="form-group col-lg-2 container center_div">
       <input type="submit" class="form-control" value="add dish">
       </div>
-      {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-          {% endfor %}
-      </ul>
-      {% endif %}
     </form>
     {% endblock %}
