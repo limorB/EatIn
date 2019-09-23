@@ -3,28 +3,35 @@
 
 {% block content %}
 <h1>Welcome to the food feed<h1>
-  {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-      {% endfor %}
-  </ul>
-  {% endif %}
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <h5>Coming up shortly</h5>
     <a class="btn btn-primary" href="/cook/" role="button">add dish</a>
     <a class="btn btn-primary" href="/cart/" role="button">My Cart</a>
     <div class="list-group">
       <ul>{% for food in all_foods %}
-      <li>
-        <p class = "list-group-item py-1">{{food.title}}:{{food.description}}</p>
-        <img src="http://127.0.0.1:8000/media/{{food.image}}" alt="{food.title}}" height="100" width="100">
-        <a class="btn btn-primary" href="" role="button">add to cart</a>
+        <li>
+          <p class="list-group-item py-1">{{food.title}}:{{food.description}}:{{food.quantity}}</p>
+          <img src="http://127.0.0.1:8000/media/{{food.image}}" alt="{{food.title}}" height="100" width="100">
+          <form action="{% url 'add_to_cart' %}" method="POST">
+            {% csrf_token %}
+              <div class="form-group col-lg-2 container center_div">
+              <input type="hidden" name="food_id" value="{{food.id}}">
+              <input type="number" name="quantity" min="1" max={{food.quantity}}>
+              <input type="submit" class="form-control" value="add to cart">
+              </div>
+          </form>
 
-      </li>
-      {% endfor %}
+        </li>
 
 
 
+        {% endfor %}
 
 
-    {% endblock %}
+        {% endblock %}
