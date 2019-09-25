@@ -4,10 +4,10 @@ from .models import Food
 from django.contrib import messages
 from django.utils import timezone
 from django.shortcuts import redirect
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 
 
-# @login_required(login_url='accoutns/login/')
+@login_required(login_url='accoutns/login/')
 def food_upload(request):
     if request.method == 'POST':
         form = FoodForm(request.POST,request.FILES)

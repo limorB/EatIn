@@ -5,4 +5,23 @@
 <h1>My Cart<h1>
     <h5>Coming up shortly</h5>
     <button type="button" class="btn btn-secondary btn-lg" disabled>checkout</button>
-    {% endblock %}
+
+    <div class="list-group">
+      <ul>{% for food in foods%}
+        <li>
+          <p class="list-group-item py-1">food:{{food.title}},description:{{food.description}},price:{{food.price}}</p>
+            <!-- <form action="{% url 'remove_from_cart' %}" method="POST">
+              {% csrf_token %}
+              <input type="number" name="quantity" min="1" max="{{food.quantity}}">
+              <input type="submit" class="form-control" value="remove">
+              <input type="hidden" name="food_id" value="{{food.id}}">
+              </div>
+          </form> -->
+          <!-- <div class="col-md-2">
+          <a href="/cart/remove/?id={{ food.id }}" class="btn btn-sm btn-product">Remove</a>
+        </div> -->
+
+          </li>
+      </ul>
+      {% endfor %}
+      {% endblock %}

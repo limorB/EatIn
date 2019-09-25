@@ -10,7 +10,6 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <h5>Coming up shortly</h5>
     <a class="btn btn-primary" href="/cook/" role="button">add dish</a>
     <a class="btn btn-primary" href="/cart/" role="button">My Cart</a>
     <div class="list-group">
@@ -22,16 +21,21 @@
             {% csrf_token %}
               <div class="form-group col-lg-2 container center_div">
               <input type="hidden" name="food_id" value="{{food.id}}">
-              <input type="number" name="quantity" min="1" max={{food.quantity}}>
+              <input type="hidden" name="food_title" value="{{food.title}}">
+              <input type="number" name="quantity" min="1" max="{{food.quantity}}">
               <input type="submit" class="form-control" value="add to cart">
               </div>
           </form>
 
         </li>
-
-
-
         {% endfor %}
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
 
         {% endblock %}
