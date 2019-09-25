@@ -28,7 +28,13 @@ def remove_from_cart(request,id):
 
 # @login_required(login_url='/accoutns/login/')
 def update_quantity(request,id):
-    if request.method == 'GET':
-        print(id)
+    cart = Cart.objects.get(pk=id)
+    quantity  = request.GET['quantity']
+    cart.quantity = quantity
+    cart.save()
 
-        return request
+    print("cart id: {}".format(id))
+    print(request.GET['quantity'])
+
+
+    return render(request, 'mycart/index.html')

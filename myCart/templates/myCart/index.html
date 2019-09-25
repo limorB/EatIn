@@ -22,13 +22,17 @@
             <a href="{% url 'remove_from_cart' id=cart.id %}">remove item</a>
           <div class="clearfix"></div>
           <script>
-            const a = () => {
-              var u = '{% url 'update_quantity' id=3 %}'.replace('3','4');
-              window.location.href = u;
-            }
+            jQuery(document).ready(function(){
+            	jQuery(".quantity_changer").change(function(){
+            		var item_id = $(this).attr('id').replace("item_qnt_", "");
+            		var item_quantity = $(this).val();
+            		console.log("I am updating the server (quanity changed):"+item_id+" "+item_quantity);
+            		$.getJSON("update/"+item_id+"?quantity="+item_quantity);
+            	})
+            })
           </script>
           <a href="javascript:a()" >update quantity:</a>
-          <p><span><input type="number" name="quantity" id="item_qnt_{{cart.id}}" min="1" max="{{cart.quantity}}"></span></p>
+          <p><span><input type="number" class="quantity_changer" name="quantity" id="item_qnt_{{cart.id}}" min="1" max="{{cart.food.quantity}}"></span></p>
 
 
         </li>
