@@ -28,14 +28,11 @@ def display_cart(request):
 
 
 @login_required(login_url='/accoutns/login/')
-def remove_from_cart(request):
-    if request.method == 'POST':
-        print("i got here")
-        user_id = request.user.id
-        food_id = int(request.POST['food_id'])
-        cart = Cart.objects.get(user_id=user_id,food_id=food_id)
-        print(cart.id)
-        return display_cart(request)
-    else:
+def remove_from_cart(request,id):
+    #notice the id is a food_id and not cart_id
+    if request.method == 'GET':
         print("this is a get")
+        user_id = request.user.id
+        cart = Cart.objects.get(user_id=user_id,food_id=id)
+        cart.delete()
     return display_cart(request)
