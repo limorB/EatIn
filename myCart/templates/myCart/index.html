@@ -23,10 +23,21 @@
           <div class="clearfix"></div>
           <script>
             jQuery(document).ready(function(){
+            	
+            	// Whenever user changes the input (REQUIRES THEM TO PRESS ENTER! I think...)
             	jQuery(".quantity_changer").change(function(){
+            		
+            		// Lets get the item's id and quantity from the DOM
             		var item_id = $(this).attr('id').replace("item_qnt_");
             		var item_quantity = $(this).val();
             		console.log("I am updating the server (quanity changed):"+item_id+" "+item_quantity);
+            		
+            		// Example of what the Request looks like:
+            		// GET update/123?quantity=3
+            		// No handler on server response because who cares... :) 
+            		$.getJSON("update/"+item_id+"?quantity="+item_quantity);
+            		
+            		
             	})
             })
           </script>
