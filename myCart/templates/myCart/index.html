@@ -1,28 +1,37 @@
 {% extends 'base.html' %}
 
 
+
 {% block content %}
 <h1>My Cart<h1>
     <h5>Your meal is (almost) on it's way </h5>
     <button type="button" class="btn btn-secondary btn-lg" disabled>checkout</button>
 
     <div class="list-group">
-      <ul>{% for food in foods%}
+      <ul>{% for cart in carts%}
         <li>
-        <div class="delivery">
-        <p><span>item name : </span> <span >{{food.title}}</span></p>
-        <div class="clearfix"></div>
-        <p><span>Unit price : $</span> <span >{{food.price}}</span></p>
-        <div class="clearfix"></div>
-        <p><span>Quantity : </span> <span >{{ food.quantity }}</span></p>
-        <div class="clearfix"></div>
-        <p><span>Total price : </span> <span >{% widthratio food.quantity 1 food.price %} </span></p>
-        <div class="clearfix"></div>
-        <a href="{% url 'remove_from_cart' id=food.id %}">remove_from_cart</a>
-        <p><span>update quantity<input type="number" name="update quantity" min="1" max="{{food.quantity}}"></span></p>
-    </div>
+          <div class="delivery">
+            <p><span>item name : </span> <span>{{cart.food.title}}</span></p>
+            <div class="clearfix"></div>
+            <p><span>Unit price : $</span> <span>{{cart.food.price}}</span></p>
+            <div class="clearfix"></div>
+            <p><span>Quantity : </span> <span>{{ cart.quantity }}</span></p>
+            <div class="clearfix"></div>
+            <p><span>Total price : </span> <span>{% widthratio cart.food.quantity 1 cart.food.price %} </span></p>
+            <div class="clearfix"></div>
+            <a href="{% url 'remove_from_cart' id=cart.id %}">remove item</a>
+          <div class="clearfix"></div>
+          <script>
+            const a = () => {
+              var u = '{% url 'update_quantity' id=3 %}'.replace('3','4');
+              window.location.href = u;
+            }
+          </script>
+          <a href="javascript:a()" >update quantity:</a>
+          <p><span><input type="number" name="quantity" id="item_qnt_{{cart.id}}" min="1" max="{{cart.quantity}}"></span></p>
 
-          </li>
+
+        </li>
       </ul>
       {% endfor %}
       {% endblock %}
