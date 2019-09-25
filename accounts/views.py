@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout
 from django.contrib import messages
 from .models import Profile
 from .forms import RegistrationForm,ProfileRegForm
 from django.contrib.auth.forms import AuthenticationForm
-import pdb
+from feed.views import display_feed
+
+
 
 
 
@@ -19,10 +20,9 @@ def registration(request):
             profile_form.save()
             user = user_form.save()
             login(request,user)
-            #form.save return a user (if valid)
-            context = {'user_form':user_form,'profile_form':profile_form}
             messages.success(request, 'You are now logged in.')
-            return render(request,'feed/index.html',context)
+
+            return display_feed(request)
         else:
             messages.error(request, 'oops something went wrong, try again')
 
@@ -42,7 +42,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request,user)
-            return redirect('/feed/')
+            return display_feed(request)
 
     else:
         form = AuthenticationForm(request.POST)
@@ -55,5 +55,5 @@ def login_view(request):
 def logout_view(request):
     if request.method == "POST":
         logout(request)
-        #django knows which user is now logged in so we don't need to pass the current user
+
         return redirect('/accounts/login/')
