@@ -3,23 +3,24 @@
 
 {% block content %}
 <h1>My Cart<h1>
-    <h5>Coming up shortly</h5>
+    <h5>Your meal is (almost) on it's way </h5>
     <button type="button" class="btn btn-secondary btn-lg" disabled>checkout</button>
 
     <div class="list-group">
       <ul>{% for food in foods%}
         <li>
-          <p class="list-group-item py-1">food:{{food.title}},description:{{food.description}},price:{{food.price}}</p>
-            <!-- <form action="{% url 'remove_from_cart' %}" method="POST">
-              {% csrf_token %}
-              <input type="number" name="quantity" min="1" max="{{food.quantity}}">
-              <input type="submit" class="form-control" value="remove">
-              <input type="hidden" name="food_id" value="{{food.id}}">
-              </div>
-          </form> -->
-          <!-- <div class="col-md-2">
-          <a href="/cart/remove/?id={{ food.id }}" class="btn btn-sm btn-product">Remove</a>
-        </div> -->
+        <div class="delivery">
+        <p><span>item name : </span> <span >{{food.title}}</span></p>
+        <div class="clearfix"></div>
+        <p><span>Unit price : $</span> <span >{{food.price}}</span></p>
+        <div class="clearfix"></div>
+        <p><span>Quantity : </span> <span >{{ food.quantity }}</span></p>
+        <div class="clearfix"></div>
+        <p><span>Total price : </span> <span >{% widthratio food.quantity 1 food.price %} </span></p>
+        <div class="clearfix"></div>
+        <a href="{% url 'remove_from_cart' id=food.id %}">remove_from_cart</a>
+        <p><span>update quantity<input type="number" name="update quantity" min="1" max="{{food.quantity}}"></span></p>
+    </div>
 
           </li>
       </ul>
