@@ -38,6 +38,7 @@ def add_to_cart(request):
         quantity = int(request.POST['quantity'])
         food_title = request.POST['food_title']
         carts = Cart.objects.filter(user_id=user_id)
+        # try with Cart.objects.count()
         if len(carts)>0:
             for cart in carts:
                 if cart.food_id == food_id:
