@@ -13,7 +13,7 @@ def display_cart(request):
         user_id = request.user.id
         carts = Cart.objects.filter(user_id=user_id)
         if len(carts) == 0:
-            messages.info(request, "your cart is empty")
+            messages.info(request, "Your bag is empty")
 
     return render(request, 'mycart/index.html',{'carts':carts})
 

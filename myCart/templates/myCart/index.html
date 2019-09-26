@@ -5,8 +5,6 @@
 {% block content %}
 <h1>My Cart<h1>
     <h5>Your meal is (almost) on it's way </h5>
-    <button type="button" class="btn btn-secondary btn-lg" disabled>checkout</button>
-
     <div class="list-group">
       <ul>{% for cart in carts%}
         <li>
@@ -23,19 +21,18 @@
           <div class="clearfix"></div>
           <script>
             jQuery(document).ready(function(){
-            	jQuery(".quantity_changer").change(function(){
-            		var item_id = $(this).attr('id').replace("item_qnt_", "");
-            		var item_quantity = $(this).val();
-            		console.log("I am updating the server (quanity changed):"+item_id+" "+item_quantity);
-            		$.getJSON("update/"+item_id+"?quantity="+item_quantity);
-            	})
-            })
+                	jQuery(".quantity_changer").change(function(){
+                		var item_id = $(this).attr('id').replace("item_qnt_", "");
+                		var item_quantity = $(this).val();
+                		console.log("I am updating the server (quanity changed):"+item_id+" "+item_quantity);
+                		$.getJSON("update/"+item_id+"?quantity="+item_quantity);
+                	})
+                })
           </script>
-          <a href="javascript:a()" >update quantity:</a>
+          <button >update quantity:</button>
           <p><span><input type="number" class="quantity_changer" name="quantity" id="item_qnt_{{cart.id}}" min="1" max="{{cart.food.quantity}}"></span></p>
-
-
         </li>
       </ul>
       {% endfor %}
+        <a class="btn btn-primary" href="{% url 'display_checkout' %}" role="button">Click to Checkout</a>
       {% endblock %}
