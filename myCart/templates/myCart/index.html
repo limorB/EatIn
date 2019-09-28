@@ -15,7 +15,7 @@
             <div class="clearfix"></div>
             <p><span>Quantity : </span> <span>{{ cart.quantity }}</span></p>
             <div class="clearfix"></div>
-            <p><span>Total price : </span> <span>{% widthratio cart.food.quantity 1 cart.food.price %} </span></p>
+            <p><span>Total price : </span> <span>{% widthratio cart.quantity 1 cart.food.price %} </span></p>
             <div class="clearfix"></div>
             <a href="{% url 'remove_from_cart' id=cart.id %}">remove item</a>
           <div class="clearfix"></div>
