@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 
 
 {% block content %}
-<h1>Welcome to the food feed<h1>
+<link rel="stylesheet" type="text/css" href="{% static 'feed/style.css' %}">
+<h1 class="container feed_title">Welcome to the food feed<h1>
     {% if messages %}
     <ul class="messages">
       {% for message in messages %}
@@ -10,30 +12,44 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <div class="list-group">
-      <ul>{% for food in all_foods %}
-        <li>
-          <p class="list-group-item py-1">{{food.title}}:{{food.description}}:{{food.quantity}}</p>
-          <img src="http://127.0.0.1:8000/media/{{food.image}}" alt="{{food.title}}" height="100" width="100">
-          <form action="{% url 'add_to_cart' %}" method="POST">
-            {% csrf_token %}
-              <div class="form-group col-lg-2 container center_div">
-              <input type="hidden" name="food_id" value="{{food.id}}">
-              <input type="hidden" name="food_title" value="{{food.title}}">
-              <input type="number" name="quantity" min="1" max="{{food.quantity}}">
-              <input type="submit" class="form-control" value="add to cart">
+    <div class="list-group list-group-horizontal">
+      {% for food in all_foods %}
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mt-3">
+            <div class="card">
+              <div class="card-horizontal">
+                <div class="img-square-wrapper">
+                  <img class="" src="http://127.0.0.1:8000/media/{{food.image}}" alt="{{food.title}}">
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">{{food.title}}</h4>
+                  <h6 class="card-text">{{food.description}}</h6>
+                  <h6 class="card-text">quantity: {{food.quantity}}</h6>
+                  <div class="card-text">
+                  <form action="{% url 'add_to_cart' %}" method="POST">
+                    {% csrf_token %}
+                      <input type="hidden" name="food_id" value="{{food.id}}">
+                      <input type="hidden" name="food_title" value="{{food.title}}">
+                      <input type="number" class="btn btn-secondary btn-sm" name="quantity" min="1" max="{{food.quantity}}">
+                      <input type="submit" class="btn btn-secondary btn-sm" value="add to cart">
+                    </div>
+                  </form>
+                </div>
               </div>
-          </form>
 
-        </li>
-        {% endfor %}
-        {% if messages %}
-        <ul class="messages">
-          {% for message in messages %}
-          <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
 
 
-        {% endblock %}
+      {% endfor %}
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      {% endblock %}

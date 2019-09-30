@@ -1,0 +1,20 @@
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+}
+
+
+.feed_title {
+  font-family: 'Verdana', serif;
+  font-size: 3.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  font-style:normal;
+  padding-top: 0.1em;
+  text-shadow: 0.07em 0.07em 0 rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  background-color: Cornsilk;
+}

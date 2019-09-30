@@ -126,8 +126,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+STATIS_ROOT = ""
+
 STATIC_URL = '/static/'
 
-PAYPAL_RECEIVER_EMAIL = 'limorsusen@gmail.com'
-
-PAYPAL_TEST = True
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)

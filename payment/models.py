@@ -9,7 +9,7 @@ class Order(models.Model):
     )
     created_time = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=4, decimal_places=2,blank=False,null=False)
-    payment_type = models.CharField(
+    payment_method = models.CharField(
         max_length=10,
         default='OTHER',
         null=False,
@@ -23,7 +23,7 @@ class Order(models.Model):
             default='PENDING',
             null=False,
             choices=  [
-                ('PENDIN', 'Pendng'),
+                ('PENDING', 'Pendng'),
                 ('REJECTED', 'Rejected'),
                 ('COMPLETED', 'Completed'),
                 ]
