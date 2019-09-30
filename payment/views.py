@@ -1,29 +1,60 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render,redirect
+from myCart.models import Cart
+from cook.models import Food
+from django.utils import timezone
+from .forms import PaymentForm
+
+
 
 
 def display_checkout(request):
-    return render(request, 'payment/index.html')
+    if request.method == 'GET':
+        user_id = request.user.id
+        cart_items = Cart.objects.filter(user_id=user_id)
+        count_items = cart_items.count()
+        if count_items == 0:
+            messages.info(request, "Your bag is empty")
+            context = {}
+        else:
+            created_time = timezone.now()
+            total_price = 0
+            for item in cart_items:
+                sub_total = item.quantity*item.food.price
+                total_price += sub_total
+            form = PaymentForm()
+            context = {
+                        "cart_items":cart_items,
+                        "count_items":count_items,
+                        "total_price":total_price,
+                        "form":form,
 
-# def process_payment(request):
-#     order_id = request.session.get('order.id')
-#     order = get_object_or_404(Order, id=order_id)
-#     host = request.get_host()
-#
-#     paypal_dict = {
-#         'business': settings.PAYPAL_RECEIVER_EMAIL,
-#         'amount': '%.2f' % order.total_cost().quantize(
-#             Decimal('.01')),
-#         'item_name': 'Order {}'.format(order.id),
-#         'invoice': str(order.id),
-#         'currency_code': 'USD',
-#         'notify_url': 'http://{}{}'.format(host,
-#                                            reverse('paypal-ipn')),
-#         'return_url': 'http://{}{}'.format(host,
-#                                            reverse('payment_done')),
-#         'cancel_return': 'http://{}{}'.format(host,
-#                                               reverse('payment_cancelled')),
-#     }
-#
-#     form = PayPalPaymentsForm(initial=paypal_dict)
-#     return render(request, 'ecommerce_app/process_payment.html', {'order': order, 'form': form})
+                        }
+        return render(request, 'payment/index.html',context)
+    else:
+        return make_payment(request)
+
+
+
+
+
+def make_payment(request):
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.eater_id = request.user.id
+            order.created_time = timezone.now()
+            cart_items = Cart.objects.filter(user_id=order.eater_id)
+            total_price = 0
+            for item in cart_items:
+                sub_total = item.quantity*item.food.price
+                total_price += sub_total
+            order.total_price = total_price
+            order.save()
+            print(order.id)
+            for item in cart_items:
+                item.order_id = order.id
+                item.save()
+
+
+    return render(request, 'payment/success.html')

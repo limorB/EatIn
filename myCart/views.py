@@ -12,7 +12,8 @@ def display_cart(request):
     if request.method == 'GET':
         user_id = request.user.id
         carts = Cart.objects.filter(user_id=user_id)
-        if len(carts) == 0:
+        count_items = carts.count()
+        if count_items == 0:
             messages.info(request, "Your bag is empty")
 
     return render(request, 'mycart/index.html',{'carts':carts})

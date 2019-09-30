@@ -4,6 +4,7 @@
     {% extends 'base.html' %}
 
     {% block content %}
+    <h3>what's cooking good looking</h3>
     <form action="{% url 'food_upload' %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       {{form.as_p}}

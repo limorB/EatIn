@@ -14,4 +14,4 @@ class Cart(models.Model):
     )
     added_time = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(blank=False,null=False)
-    is_ordered = models.BooleanField(default=False)
+    

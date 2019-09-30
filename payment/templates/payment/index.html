@@ -3,6 +3,25 @@
 
 {% block content %}
 <h1>Payment<h1>
-    <h5>Coming up shortly</h5>
-    <button type="button" class="btn btn-secondary btn-lg" disabled>checkout</button>
-    {% endblock %}
+    <h5>{{count_items}} items</h5>
+    <ul>{% for item in cart_items %}
+      <li>
+        <p><span>item :</span> <span>{{item.food.title}}</span></p>
+      </li>
+      <li>
+        <p><span>quantity :</span> <span>{{item.quantity}}</span></p>
+      </li>
+      <li>
+        <p><span>price :</span><span>{% widthratio item.quantity 1 item.food.price %}$ </span></p>
+      </li>
+      {% endfor %}
+      <h5>Total to pay: {{total_price}}$</h5>
+    <form action="{% url 'make_payment' %}" method="post">
+      {% csrf_token %}
+      {{form}}
+
+      <div class="form-group col-lg-2 container center_div">
+      <input type="submit" class="form-control" value="make payment">
+
+    </form>
+      {% endblock %}
