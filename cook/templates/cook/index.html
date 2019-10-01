@@ -1,15 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
 
 
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'cook/style.css' %}">
+<div class="bg-img">
 
-    {% extends 'base.html' %}
-
-    {% block content %}
-    <h3>what's cooking good looking</h3>
-    <form action="{% url 'food_upload' %}" method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{form.as_p}}
-      <div class="form-group col-lg-2 container center_div">
-      <input type="submit" class="form-control" value="add dish">
-      </div>
-    </form>
-    {% endblock %}
+  <form action="{% url 'food_upload' %}" method="POST" enctype="multipart/form-data" class="container-form">
+    <h5 class="cook_title"><strong>what's cooking good looking?</strong></h5>
+    {% csrf_token %}
+    {{form|crispy}}
+    <div class="form-group col-lg-2 container center_div">
+      <input type="submit" class="btn btn-success btn-md btn-block" value="add dish">
+    </div>
+  </form>
+  </div>
+  {% endblock %}

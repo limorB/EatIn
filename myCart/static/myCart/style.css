@@ -1,0 +1,29 @@
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+}
+
+
+.bg-img {
+  /* The image used */
+  background-image: url("/media/images/superMarket.jpeg");
+
+
+  /* Control the height of the image */
+  min-height: 900px;
+
+  /* Center and scale the image nicely */
+  background-position: bottom left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: sticky;
+}
+
+.feed_title {
+  text-align: center;
+  font-family: 'Copperplate', 'Arial';
+
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+
+  color: NavajoWhite;
+}

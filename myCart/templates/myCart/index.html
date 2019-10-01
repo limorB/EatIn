@@ -1,38 +1,45 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 
 {% block content %}
-<h1>My Cart<h1>
-    <h5>Your meal is (almost) on it's way </h5>
-    <div class="list-group">
-      <ul>{% for cart in carts%}
-        <li>
-          <div class="delivery">
-            <p><span>item name : </span> <span>{{cart.food.title}}</span></p>
-            <div class="clearfix"></div>
-            <p><span>Unit price : $</span> <span>{{cart.food.price}}</span></p>
-            <div class="clearfix"></div>
-            <p><span>Quantity : </span> <span>{{ cart.quantity }}</span></p>
-            <div class="clearfix"></div>
-            <p><span>Total price : </span> <span>{% widthratio cart.quantity 1 cart.food.price %} </span></p>
-            <div class="clearfix"></div>
-            <a href="{% url 'remove_from_cart' id=cart.id %}">remove item</a>
-          <div class="clearfix"></div>
-          <script>
-            jQuery(document).ready(function(){
-                	jQuery(".quantity_changer").change(function(){
-                		var item_id = $(this).attr('id').replace("item_qnt_", "");
-                		var item_quantity = $(this).val();
-                		console.log("I am updating the server (quanity changed):"+item_id+" "+item_quantity);
-                		$.getJSON("update/"+item_id+"?quantity="+item_quantity);
-                	})
+<link rel="stylesheet" type="text/css" href="{% static 'myCart/style.css' %}">
+<div class="bg-img">
+
+<h1 class="feed_title">My Cart<h1>
+    <h5 class="feed_title">Your meal is (almost) on it's way </h5>
+
+    <div class="list-group list-group-horizontal">
+      {% for cart in carts%}
+      <div class="card mb-3 col-4 mx-auto">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card-body">
+              <p><span>{{cart.food.title}}</span></p>
+              <p><span>Unit price : $</span> <span>{{cart.food.price}}</span></p>
+              <p><span>Quantity : </span> <span>{{ cart.quantity }}</span></p>
+              <p><span>Total price : </span> <span>{% widthratio cart.quantity 1 cart.food.price %} </span></p>
+              <a href=" {% url 'remove_from_cart' id=cart.id %}">remove item</a>
+              <script>
+                jQuery(document).ready(function() {
+                  jQuery(".quantity_changer").change(function() {
+                    var item_id = $(this).attr('id').replace("item_qnt_", "");
+                    var item_quantity = $(this).val();
+                    console.log("I am updating the server (quanity changed):" + item_id + " " + item_quantity);
+                    $.getJSON("update/" + item_id + "?quantity=" + item_quantity);
+                  })
                 })
-          </script>
-          <button >update quantity:</button>
-          <p><span><input type="number" class="quantity_changer" name="quantity" id="item_qnt_{{cart.id}}" min="1" max="{{cart.food.quantity}}"></span></p>
-        </li>
-      </ul>
+              </script>
+              <button>update quantity:</button>
+              <p><span><input type="number" class="quantity_changer" name="quantity" id="item_qnt_{{cart.id}}" min="1" max="{{cart.food.quantity}}"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
       {% endfor %}
-        <a class="btn btn-primary" href="{% url 'display_checkout' %}" role="button">Click to Checkout</a>
-      {% endblock %}
+    </div>
+    <div class="text-center">
+      <a class="btn btn-primary col-4 mx-auto" href="{% url 'display_checkout' %}" role="button">Click to Checkout</a>
+    </div>
+    </div>
+    {% endblock %}

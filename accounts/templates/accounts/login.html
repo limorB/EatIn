@@ -1,14 +1,21 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
 
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/style.css' %}">
+<div class="bg-img">
   <h1>Login</h1>
-  <form action="{% url 'login_view' %}" method="POST">
+  <form action="{% url 'login_view' %}" method="POST" class="container-form">
     {% csrf_token %}
-    {{form}}
-    <div class="form-group col-lg-2 container center_div">
-      <input type="submit" class="btn btn-primary" value="Login">
+    {{form|crispy}}
+<div class="btn-toolbar">
+    <input type="submit" class="btn btn-primary" value="Login">
+    <a class="class="btn btn-primary btn-sm"" href="{% url 'registration' %}" role="button">Not a memeber yet?</a>
     </div>
-    <a class="btn btn-primary" href="{% url 'registration' %}" role="button">Click to Sign Up</a>
   </form>
+
+</div>
+
 {% endblock %}

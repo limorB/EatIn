@@ -27,7 +27,7 @@ def remove_from_cart(request,id):
         cart.delete()
     return display_cart(request)
 
-# @login_required(login_url='/accoutns/login/')
+@login_required(login_url='/accoutns/login/')
 def update_quantity(request,id):
     cart = Cart.objects.get(pk=id)
     quantity  = request.GET['quantity']
