@@ -49,12 +49,24 @@ def make_payment(request):
             for item in cart_items:
                 sub_total = item.quantity*item.food.price
                 total_price += sub_total
+                #updating the food quantity
+                food = Food.objects.get(id=item.food_id)
+                food.quantity-=item.quantity
+                print(food.quantity)
+                print(item.quantity)
+                food.save()
+                #
+
             order.total_price = total_price
             order.save()
-            print(order.id)
+            #saving the order_id in cart_items
             for item in cart_items:
                 item.order_id = order.id
                 item.save()
 
 
+
     return render(request, 'payment/success.html')
+
+
+# def update_feed_quantity(request):

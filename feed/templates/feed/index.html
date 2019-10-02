@@ -6,56 +6,50 @@
 <link rel="stylesheet" type="text/css" href="{% static 'feed/style.css' %}">
 <div class="bg-img">
 
-<h1 class="container feed_title">Feeling Hungry?<h1>
+  <h1 class="container feed_title">Feeling Hungry?<h1>
 
 
-    {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <div class="card-columns d-flex">
-      {% for food in all_foods %}
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md d-flex">
-            <div class="card">
-              <div class="img-square-wrapper">
-                <img class="card-img-top" src="http://127.0.0.1:8000/media/{{food.image}}" alt="{{food.title}}">
+      <div class="card-columns d-flex">
+        {% for food in all_foods %}
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md d-flex">
+              <div class="card">
+                <div class="img-square-wrapper">
+                  <img class="card-img-top" src="http://127.0.0.1:8000/media/{{food.image}}" alt="{{food.title}}">
 
-                <div class="card-body text-center">
-                  <h4 class="card-title">{{food.title}}</h4>
-                  <h6 class="card-text text-left">{{food.description}}</h6>
-                  <h6 class="card-text text-left">quantity: {{food.quantity}}</h6>
-                  <h6 class="card-text text-left">address: {{food.user.profile.address}}</h6>
-                  <h6 class="card-text text-left">price: {{food.price}}</h6>
-                  <div class="card-text text-left">
-                    <form action="{% url 'add_to_cart' %}" method="POST">
-                      {% csrf_token %}
-                      <input type="hidden" name="food_id" value="{{food.id}}">
-                      <input type="hidden" name="food_title" value="{{food.title}}">
-                      <input type="number" class="btn btn-warning btn-sm" name="quantity" min="1" max="{{food.quantity}}">
-                      <input type="submit" class="btn btn-warning btn-sm" value="add to cart">
-                    </form>
+                  <div class="card-body text-center">
+                    <h4 class="card-title">{{food.title}}</h4>
+                    <h6 class="card-text text-left">{{food.description}}</h6>
+                    <h6 class="card-text text-left">quantity: {{food.quantity}}</h6>
+                    <h6 class="card-text text-left">address: {{food.user.profile.address}}</h6>
+                    <h6 class="card-text text-left">price: {{food.price}}</h6>
+                    <div class="card-text text-left">
+                      <form action="{% url 'add_to_cart' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="food_id" value="{{food.id}}">
+                        <input type="hidden" name="food_title" value="{{food.title}}">
+                        <input type="number" class="btn btn-warning btn-sm" name="quantity" min="1" max="{{food.quantity}}">
+                        <input type="submit" class="btn btn-warning btn-sm" value="add to cart">
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
 
-      {% endfor %}
-      {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-          {% endfor %}
-      </ul>
-      </div>
-      {% endif %}
-      </div>
-      {% endblock %}
+
+        {% endfor %}
+
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% endblock %}

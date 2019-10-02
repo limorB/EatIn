@@ -34,24 +34,31 @@ def add_to_cart(request):
         added_time = timezone.now()
         food_id = int(request.POST['food_id'])
         user_id = request.user.id
-        quantity = int(request.POST['quantity'])
-        food_title = request.POST['food_title']
-        carts = Cart.objects.filter(user_id=user_id)
+        if (request.POST['quantity']).isdigit():
+            quantity = int(request.POST['quantity'])
+
+            food_title = request.POST['food_title']
+            carts = Cart.objects.filter(user_id=user_id)
         # try with Cart.objects.count()
-        if len(carts)>0:
-            for cart in carts:
-                if cart.food_id == food_id:
-                    cart.quantity += quantity
-                    cart.save()
+            if len(carts)>0:
+                for cart in carts:
+                    if cart.food_id == food_id:
+                        cart.quantity += quantity
+                        cart.save()
 
-                else:
-                    create_cart(added_time,quantity,food_id,user_id)
+                    else:
+                        create_cart(added_time,quantity,food_id,user_id)
+                        mess_text = "{} was added to your cart".format(food_title)
+                        added_to_cart_message(request,mess_text)
 
+            else:
+                create_cart(added_time,quantity,food_id,user_id)
+                mess_text = "{} was added to your cart".format(food_title)
+                added_to_cart_message(request,mess_text)
         else:
-            create_cart(added_time,quantity,food_id,user_id)
+            quantity = 0
+            messages.warning(request, "please specify the desired amount")
 
     foods = Food.objects.all()
     foods_desc = foods.order_by('-created_at')
-    mess_text = "{} was added to your cart".format(food_title)
-    added_to_cart_message(request,mess_text)
     return render(request,'feed/index.html',{'all_foods':foods_desc})
