@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from cook.models import Food
-from myCart.models import Cart
+from myCart.models import CartItem
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -16,7 +16,7 @@ def display_feed(request):
 
 
 def create_cart(added_time,quantity,food_id,user_id):
-    Cart(
+    CartItem(
     added_time=added_time,
     quantity=quantity,
     food_id=food_id,
@@ -38,13 +38,13 @@ def add_to_cart(request):
             quantity = int(request.POST['quantity'])
 
             food_title = request.POST['food_title']
-            carts = Cart.objects.filter(user_id=user_id)
-        # try with Cart.objects.count()
-            if len(carts)>0:
-                for cart in carts:
-                    if cart.food_id == food_id:
-                        cart.quantity += quantity
-                        cart.save()
+            cart_items = CartItem.objects.filter(user_id=user_id)
+        # try with CartItem.objects.count()
+            if len(cart_items)>0:
+                for item in cart_items:
+                    if item.food_id == food_id:
+                        item.quantity += quantity
+                        item.save()
 
                     else:
                         create_cart(added_time,quantity,food_id,user_id)

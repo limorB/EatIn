@@ -10,16 +10,16 @@
     <h5 class="feed_title">Your meal is (almost) on it's way </h5>
 
     <div class="list-group list-group-horizontal">
-      {% for cart in carts%}
+      {% for item in cart_items%}
       <div class="card mb-3 col-4 mx-auto">
         <div class="row">
           <div class="col-md-8">
             <div class="card-body">
-              <p><span>{{cart.food.title}}</span></p>
-              <p><span>Unit price : $</span> <span>{{cart.food.price}}</span></p>
-              <p><span>Quantity : </span> <span>{{ cart.quantity }}</span></p>
-              <p><span>Total price : </span> <span>{% widthratio cart.quantity 1 cart.food.price %} </span></p>
-              <a href=" {% url 'remove_from_cart' id=cart.id %}">remove item</a>
+              <p><span>{{item.food.title}}</span></p>
+              <p><span>Unit price : $</span> <span>{{item.food.price}}</span></p>
+              <p><span>Quantity : </span> <span>{{ item.quantity }}</span></p>
+              <p><span>Total price : </span> <span>{% widthratio item.quantity 1 item.food.price %} </span></p>
+              <a href=" {% url 'remove_from_cart' id=item.id %}">remove item</a>
               <script>
                 jQuery(document).ready(function() {
                   jQuery(".quantity_changer").change(function() {
@@ -31,7 +31,7 @@
                 })
               </script>
               <button>update quantity:</button>
-              <p><span><input type="number" class="quantity_changer" name="quantity" id="item_qnt_{{cart.id}}" min="1" max="{{cart.food.quantity}}"></span></p>
+              <p><span><input type="number" class="quantity_changer" name="quantity" id="item_qnt_{{item.id}}" min="1" max="{{item.food.quantity}}"></span></p>
             </div>
           </div>
         </div>
