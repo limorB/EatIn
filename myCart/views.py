@@ -38,4 +38,4 @@ def update_quantity(request,id):
     print(request.GET['quantity'])
 
 
-    return render(request, 'mycart/index.html')
+    return render(request, 'mycart/index.html', {'id': id, 'quantity': quantity})
