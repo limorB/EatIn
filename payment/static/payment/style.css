@@ -2,12 +2,8 @@
 .bg-img {
   /* The image used */
   background-image: url("/media/images/creditCard.jpg");
-
-
-
   /* Control the height of the image */
-  min-height: 800px;
-
+  min-height: 600px;
   /* Center and scale the image nicely */
   background-position: bottom left;
   background-repeat: no-repeat;
@@ -15,6 +11,17 @@
   position: sticky;
 }
 
+.bg-img-success {
+  /* The image used */
+  background-image: url("/media/images/deliveryGuy.jpeg");
+  /* Control the height of the image */
+  min-height: 800px;
+  /* Center and scale the image nicely */
+  background-position: bottom left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: sticky;
+}
 .payment_title {
   text-align: center;
   font-family: 'Copperplate', 'Arial';
@@ -23,7 +30,15 @@
 
   color: NavajoWhite;
 }
+.success_title {
+  text-align: left;
+  font-family: 'Copperplate', 'Arial';
+  padding-left: 40px;
+  padding-top: 20px;
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
 
+  color: NavajoWhite;
+}
 .pay_box {
   background-color: NavajoWhite;
 
