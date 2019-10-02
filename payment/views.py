@@ -10,7 +10,7 @@ from .forms import PaymentForm
 def display_checkout(request):
     if request.method == 'GET':
         user_id = request.user.id
-        cart_items = CartItem.objects.filter(user_id=user_id)
+        cart_items = CartItem.objects.filter(user_id=user_id,order_id__isnull=True)
         count_items = cart_items.count()
         if count_items == 0:
             messages.info(request, "Your bag is empty")

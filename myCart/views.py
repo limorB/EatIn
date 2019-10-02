@@ -3,15 +3,13 @@ from django.contrib.auth.decorators import login_required
 from .models import CartItem
 from cook.models import Food
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
-import pdb
 
 
 @login_required(login_url='/accoutns/login/')
 def display_cart(request):
     if request.method == 'GET':
         user_id = request.user.id
-        cart_items = CartItem.objects.filter(user_id=user_id)
+        cart_items = CartItem.objects.filter(user_id=user_id,order_id__isnull=True)
         count_items = cart_items.count()
         if count_items == 0:
             messages.info(request, "Your bag is empty")

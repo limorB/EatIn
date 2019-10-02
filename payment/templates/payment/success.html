@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
 
 {% block content %}
-<h1>Your order has been approved and is now ready for pick up<h1>
+<link rel="stylesheet" type="text/css" href="{% static 'payment/style.css' %}">
+<div class="bg-img-success">
+<h1 class="success_title">Your order has been</h1>
+<h1 class="success_title">approved and is now</h1>
+<h1 class="success_title">ready for pick up...</h1>
+  </div>
       {% endblock %}
