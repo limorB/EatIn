@@ -4,7 +4,7 @@ from decimal import Decimal
 from cook.models import Food
 from payment.models import Order
 
-class Cart(models.Model):
+class CartItem(models.Model):
     order = models.ForeignKey(Order,on_delete = models.SET_NULL,null=True,default=None)
     user = models.ForeignKey(User,
     on_delete = models.CASCADE
@@ -14,4 +14,3 @@ class Cart(models.Model):
     )
     added_time = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(blank=False,null=False)
-    
