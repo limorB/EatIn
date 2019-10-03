@@ -11,13 +11,15 @@ from django.contrib.auth.decorators import login_required
 def food_upload(request):
     if request.method == 'POST':
         form = FoodForm(request.POST,request.FILES)
+        print(form)
         if form.is_valid():
+            print("form is valid")
             food = form.save(commit=False)
             food.user = request.user
             food.created_at = timezone.now()
             food.save()
             context = {'form':form}
-            messages.success(request, 'your post was uploaded,hungry people are on the way')
+            # messages.success(request, 'your post was uploaded')
             return redirect('/feed/')
 
         else:
