@@ -14,7 +14,7 @@ class Food(models.Model):
     quantity = models.IntegerField(blank=False,null=False)
     image = models.ImageField(upload_to = 'images/',default=None,blank=True)
     category = models.CharField(
-        max_length=10,
+        max_length=50,
         default='OTHER',
         null=False,
         choices=  [
