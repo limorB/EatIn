@@ -64,5 +64,6 @@ def add_to_cart(request):
             messages.warning(request, "please specify the desired amount")
 
     foods = Food.objects.filter(quantity__gt=0)
+    # Greater than 0
     foods_desc = foods.order_by('-created_at')
     return render(request,'feed/index.html',{'all_foods':foods_desc})

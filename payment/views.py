@@ -44,12 +44,12 @@ def make_payment(request):
             order = form.save(commit=False)
             order.eater_id = request.user.id
             order.created_time = timezone.now()
-            cart_items = CartItem.objects.filter(user_id=order.eater_id)
+            cart_items = CartItem.objects.filter(user_id=order.eater_id,order_id__isnull=True)
             total_price = 0
             for item in cart_items:
                 sub_total = item.quantity*item.food.price
                 total_price += sub_total
-                #updating the food quantity
+                #updating the food quantity in stock
                 food = Food.objects.get(id=item.food_id)
                 food.quantity-=item.quantity
                 print(food.quantity)
