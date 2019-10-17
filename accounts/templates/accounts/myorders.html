@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+  <h1>My Orders</h1>
+  <div class="list-group list-group-horizontal">
+    {% for order in orders %}
+    <div class="card mb-3 col-4 mx-auto">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card-body">
+            <p><span>order date: {{order.created_time}}</span></p>
+            <p><span>total price: {{order.total_price}}</span></p>
+            {% for item in cart_items %}
+            {% if order.id == item.order_id %}
+              <p><span>item: {{item.food.description}}</span></p>
+              <p><span>item price: {{item.food.price}}</span></p>
+              <p><span>item qauntity: {{item.quantity}}</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+
+
+
+{% endblock %}

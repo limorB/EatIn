@@ -6,6 +6,9 @@ from .models import Profile
 from .forms import RegistrationForm,ProfileRegForm
 from django.contrib.auth.forms import AuthenticationForm
 from feed.views import display_feed
+from payment.models import Order
+from cook.models import Food
+from myCart.models import CartItem
 
 
 
@@ -57,3 +60,46 @@ def logout_view(request):
         logout(request)
 
         return redirect('/accounts/login/')
+
+
+def myorders(request):
+    if request.user.is_authenticated:
+        eater_id = request.user.id
+        orders = Order.objects.filter(eater_id=eater_id)
+        print("this is the user id {} ".format(eater_id))
+        print("this is the user {} ".format(request.user))
+        # context = {}
+        # for order in orders:
+        #     context[order.id] = {}
+        #     context[order.id]['order'] = order
+        #     context[order.id]['cart_items'] = CartItem.objects.filter(order_id=order.id)
+        #
+        # print(context)
+        # print(type(context))
+        # for key, value in context.items():
+        #     print(value['order'].created_time)
+        #
+        # for item in context.values():
+        #     print(item['order'].id)
+        #
+        # return render(request,'accounts/myorders.html',context)
+
+        orders_dict = {}
+        orders_list =[]
+        orders_dict['orders'] = orders
+        orders_dict['cart_items'] = []
+        for order in orders:
+            item = CartItem.objects.get(order_id = order.id)
+            orders_dict['cart_items'].append(item)
+
+        print(orders_dict)
+
+        return render(request,'accounts/myorders.html',orders_dict)
+
+
+
+
+
+    else:
+        print("you are not logged in")
+        return login_view(request)
