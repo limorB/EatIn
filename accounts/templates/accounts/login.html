@@ -6,7 +6,6 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'accounts/style.css' %}">
 <div class="bg-img">
-  <h1>Login</h1>
   <form action="{% url 'login_view' %}" method="POST" class="container-form">
     {% csrf_token %}
     {{form|crispy}}
