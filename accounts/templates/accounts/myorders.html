@@ -3,8 +3,9 @@
 {% load static %}
 
 
-{% block content %}
 
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/style.css' %}">
   <h1>My Orders</h1>
   <div class="list-group list-group-horizontal">
     {% for order in orders %}
@@ -12,10 +13,11 @@
       <div class="row">
         <div class="col-md-8">
           <div class="card-body">
-            <p><span>order date: {{order.created_time}}</span></p>
-            <p><span>total price: {{order.total_price}}</span></p>
+            <p class="order-title"><span><strong>order time: {{order.created_time}}</strong></span></p>
+            <p class="order-title"><span><strong>total price: {{order.total_price}}</strong></span></p>
             {% for item in cart_items %}
             {% if order.id == item.order_id %}
+            <p><strong>order details:</strong></p>
               <p><span>item: {{item.food.description}}</span></p>
               <p><span>item price: {{item.food.price}}</span></p>
               <p><span>item qauntity: {{item.quantity}}</span></p>

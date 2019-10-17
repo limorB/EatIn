@@ -66,8 +66,6 @@ def myorders(request):
     if request.user.is_authenticated:
         eater_id = request.user.id
         orders = Order.objects.filter(eater_id=eater_id)
-        print("this is the user id {} ".format(eater_id))
-        print("this is the user {} ".format(request.user))
         # context = {}
         # for order in orders:
         #     context[order.id] = {}
@@ -92,12 +90,7 @@ def myorders(request):
             item = CartItem.objects.get(order_id = order.id)
             orders_dict['cart_items'].append(item)
 
-        print(orders_dict)
-
         return render(request,'accounts/myorders.html',orders_dict)
-
-
-
 
 
     else:
