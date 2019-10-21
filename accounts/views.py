@@ -94,5 +94,14 @@ def myorders(request):
 
 
     else:
-        print("you are not logged in")
+        # when user isn't login he will be redirected to the login page
+        return login_view(request)
+
+
+def settings(request):
+    if request.user.is_authenticated:
+        print("this is the user name {}".format(request.user.username))
+        return render(request,'accounts/settings.html')
+    else:
+        # when user isn't login he will be redirected to the login page
         return login_view(request)

@@ -48,7 +48,7 @@
               Account
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">settings</a>
+              <a class="dropdown-item" href="{% url 'settings' %}">settings</a>
               <a class="dropdown-item" href="{% url 'myorders' %}">my orders</a>
               <form class="dropdown-item" action="{% url 'logout_view' %}" method="post">
                 {% csrf_token %}
