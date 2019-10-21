@@ -4,7 +4,7 @@ from django.contrib.auth import login,logout
 from django.contrib import messages
 from .models import Profile
 from .forms import RegistrationForm,ProfileRegForm
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm
 from feed.views import display_feed
 from payment.models import Order
 from cook.models import Food
@@ -100,8 +100,23 @@ def myorders(request):
 
 def settings(request):
     if request.user.is_authenticated:
-        print("this is the user name {}".format(request.user.username))
-        return render(request,'accounts/settings.html')
+        if request.method == 'POST':
+            print("this is the user name {}".format(request.user.username))
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)  # Important!
+                messages.success(request, 'Your password was successfully updated!')
+            else:
+                messages.error(request, 'Please correct the error below.')
+
+        else:
+            password_form = PasswordChangeForm(request.user)
+
+
+
     else:
         # when user isn't login he will be redirected to the login page
         return login_view(request)
+
+    return render(request,'accounts/settings.html',{"user":request.user,"password_form": password_form})

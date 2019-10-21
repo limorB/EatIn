@@ -7,6 +7,21 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'accounts/style.css' %}">
   <h1>profile settings</h1>
+  <div class="card-body">
+    <p><span><strong>username: {{user.username}}</strong></span></p>
+    <p><span><strong>first name: {{user.first_name}}</strong></span></p>
+    <p><span><strong>email: {{user.email}}</strong></span></p>
+    <p><span><strong>type: {{user.profile.type}}</strong></span></p>
+    <p><span><strong>address: {{user.profile.address}}</strong></span></p>
+  </div>
+  <div>
+    <h4>change your password:</h4>
+    <form action="{% url 'settings'%}" method="POST" class="container-password-form">
+      {% csrf_token %}
+      {{ password_form|crispy }}
+    <button type="submit">Save changes</button>
+    </form>
+  </div>
 
 
 
