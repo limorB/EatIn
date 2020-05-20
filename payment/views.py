@@ -10,7 +10,7 @@ from .forms import PaymentForm
 def display_checkout(request):
     if request.method == 'GET':
         user_id = request.user.id
-        cart_items = CartItem.objects.filter(user_id=user_id)
+        cart_items = CartItem.objects.filter(user_id=user_id,order_id__isnull=True)
         count_items = cart_items.count()
         if count_items == 0:
             messages.info(request, "Your bag is empty")
@@ -44,12 +44,12 @@ def make_payment(request):
             order = form.save(commit=False)
             order.eater_id = request.user.id
             order.created_time = timezone.now()
-            cart_items = CartItem.objects.filter(user_id=order.eater_id)
+            cart_items = CartItem.objects.filter(user_id=order.eater_id,order_id__isnull=True)
             total_price = 0
             for item in cart_items:
                 sub_total = item.quantity*item.food.price
                 total_price += sub_total
-                #updating the food quantity
+                #updating the food quantity in stock
                 food = Food.objects.get(id=item.food_id)
                 food.quantity-=item.quantity
                 print(food.quantity)

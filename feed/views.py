@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from cook.models import Food
-from myCart.models import CartItem
+from myCart.models import CartItem,Order
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -9,7 +9,11 @@ from django.contrib import messages
 
 def display_feed(request):
     if request.method == 'GET' or request.method == 'POST':
-        foods = Food.objects.all()
+        #show only food items with quantity greater than 0
+        foods = Food.objects.filter(quantity__gt=0)
+        for food in foods:
+            print(food.quantity)
+
         foods_desc = foods.order_by('-created_at')
 
         return render(request,'feed/index.html',{'all_foods':foods_desc})
@@ -38,7 +42,7 @@ def add_to_cart(request):
             quantity = int(request.POST['quantity'])
 
             food_title = request.POST['food_title']
-            cart_items = CartItem.objects.filter(user_id=user_id)
+            cart_items = CartItem.objects.filter(user_id=user_id,order_id__isnull=True)
         # try with CartItem.objects.count()
             if len(cart_items)>0:
                 for item in cart_items:
@@ -59,6 +63,7 @@ def add_to_cart(request):
             quantity = 0
             messages.warning(request, "please specify the desired amount")
 
-    foods = Food.objects.all()
+    foods = Food.objects.filter(quantity__gt=0)
+    # Greater than 0
     foods_desc = foods.order_by('-created_at')
     return render(request,'feed/index.html',{'all_foods':foods_desc})

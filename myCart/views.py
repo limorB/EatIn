@@ -3,18 +3,13 @@ from django.contrib.auth.decorators import login_required
 from .models import CartItem
 from cook.models import Food
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
-import pdb
 
 
 @login_required(login_url='/accoutns/login/')
 def display_cart(request):
     if request.method == 'GET':
         user_id = request.user.id
-        cart_items = CartItem.objects.filter(user_id=user_id)
-        count_items = cart_items.count()
-        if count_items == 0:
-            messages.info(request, "Your bag is empty")
+        cart_items = CartItem.objects.filter(user_id=user_id,order_id__isnull=True)
 
     return render(request, 'mycart/index.html',{'cart_items':cart_items})
 
@@ -34,9 +29,5 @@ def update_quantity(request,id):
     quantity  = request.GET['quantity']
     cart_item.quantity = quantity
     cart_item.save()
-
-    print("cart id: {}".format(id))
-    print(request.GET['quantity'])
-
 
     return render(request, 'mycart/index.html', {'id': id, 'quantity': quantity})
