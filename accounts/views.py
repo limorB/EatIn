@@ -14,6 +14,7 @@ from myCart.models import CartItem
 
 
 
+
 def registration(request):
     if request.method == 'POST':
         user_form = RegistrationForm(request.POST)
