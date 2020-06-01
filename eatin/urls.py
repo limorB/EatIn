@@ -7,7 +7,7 @@ from django.conf import settings
 
 urlpatterns = [
  path('accounts/',include('accounts.urls')),
- path('feed/',include('feed.urls')),
+ path('eatin/',include('feed.urls')),
  path('cart/',include('myCart.urls')),
  path('cook/',include('cook.urls')),
  path('payment/',include('payment.urls')),

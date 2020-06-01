@@ -25,7 +25,7 @@
                   jQuery(".quantity_changer").change(function() {
                     var item_id = $(this).attr('id').replace("item_qnt_", "");
                     var item_quantity = $(this).val();
-                    console.log("I am updating the server (quanity changed):" + item_id + " " + item_quantity);
+                    console.log("I am updating the server (quantity changed):" + item_id + " " + item_quantity);
                     $.getJSON("update/" + item_id + "?quantity=" + item_quantity);
                   })
                 })
