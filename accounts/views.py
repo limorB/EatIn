@@ -66,24 +66,7 @@ def myorders(request):
     if request.user.is_authenticated:
         eater_id = request.user.id
         orders = Order.objects.filter(eater_id=eater_id)
-        # context = {}
-        # for order in orders:
-        #     context[order.id] = {}
-        #     context[order.id]['order'] = order
-        #     context[order.id]['cart_items'] = CartItem.objects.filter(order_id=order.id)
-        #
-        # print(context)
-        # print(type(context))
-        # for key, value in context.items():
-        #     print(value['order'].created_time)
-        #
-        # for item in context.values():
-        #     print(item['order'].id)
-        #
-        # return render(request,'accounts/myorders.html',context)
-
         orders_dict = {}
-        orders_list =[]
         orders_dict['orders'] = orders
         orders_dict['cart_items'] = []
         for order in orders:
