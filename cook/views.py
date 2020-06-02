@@ -9,7 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from accounts.views import login_view
 
 
-# @login_required(login_url='accoutns/login/')
+# @login_required(login_url='accounts/login/')
 def food_upload(request):
     if request.user.is_authenticated:
         if request.method == 'POST':

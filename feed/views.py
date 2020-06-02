@@ -32,7 +32,7 @@ def added_to_cart_message(request,text):
 
 
 
-@login_required(login_url='/accoutns/login/')
+@login_required(login_url='/accounts/login/')
 def add_to_cart(request):
     if request.method == 'POST':
         added_time = timezone.now()

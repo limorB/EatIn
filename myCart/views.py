@@ -15,7 +15,7 @@ def display_cart(request):
         return login_view(request)
 
 
-@login_required(login_url='/accoutns/login/')
+@login_required(login_url='/accounts/login/')
 def remove_from_cart(request,id):
     if request.method == 'GET':
         user_id = request.user.id
@@ -23,11 +23,11 @@ def remove_from_cart(request,id):
         cart_item.delete()
     return display_cart(request)
 
-@login_required(login_url='/accoutns/login/')
+@login_required(login_url='/accounts/login/')
 def update_quantity(request,id):
     print("this is update_quantity")
     cart_item = CartItem.objects.get(pk=id)
-    quantity  = request.GET['quantity']
+    quantity = request.GET['quantity']
     cart_item.quantity = quantity
     cart_item.save()
 
