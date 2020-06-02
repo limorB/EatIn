@@ -11,7 +11,7 @@ def display_cart(request):
         user_id = request.user.id
         cart_items = CartItem.objects.filter(user_id=user_id,order_id__isnull=True)
 
-    return render(request, 'mycart/index.html',{'cart_items':cart_items})
+    return render(request, 'myCart/index.html',{'cart_items':cart_items})
 
 
 @login_required(login_url='/accoutns/login/')
