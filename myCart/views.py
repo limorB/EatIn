@@ -1,17 +1,18 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import CartItem
-from cook.models import Food
-from django.contrib import messages
+from accounts.views import login_view
 
 
-@login_required(login_url='/accoutns/login/')
 def display_cart(request):
-    if request.method == 'GET':
-        user_id = request.user.id
-        cart_items = CartItem.objects.filter(user_id=user_id,order_id__isnull=True)
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            user_id = request.user.id
+            cart_items = CartItem.objects.filter(user_id=user_id,order_id__isnull=True)
 
-    return render(request, 'myCart/index.html',{'cart_items':cart_items})
+        return render(request, 'myCart/index.html',{'cart_items':cart_items})
+    else:
+        return login_view(request)
 
 
 @login_required(login_url='/accoutns/login/')
