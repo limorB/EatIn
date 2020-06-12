@@ -12,12 +12,12 @@ class Food(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     quantity = models.IntegerField(blank=False,null=False)
-    image = models.ImageField(upload_to = 'images/',default=None,blank=True)
+    image = models.ImageField(upload_to='media/images', default=None,blank=True)
     category = models.CharField(
         max_length=50,
         default='OTHER',
         null=False,
-        choices=  [
+        choices= [
             ('ITALIAN', 'Italian'),
             ('DESERT', 'Desert'),
             ('BEVERAGES', 'Beverages'),

@@ -14,9 +14,7 @@ def food_upload(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = FoodForm(request.POST,request.FILES)
-            print(form)
             if form.is_valid():
-                print("form is valid")
                 food = form.save(commit=False)
                 food.user = request.user
                 food.created_at = timezone.now()
