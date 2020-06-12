@@ -23,7 +23,7 @@ def food_upload(request):
                 food.save()
                 context = {'form':form}
                 # messages.success(request, 'your post was uploaded')
-                return redirect('/feed/')
+                return redirect('/eatin/')
 
             else:
                 messages.error(request, 'oops something went wrong, try again')
